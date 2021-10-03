@@ -2,6 +2,7 @@
 
 angular
   .module('peerflixServerApp', [
+    'ng',
     'ngCookies',
     'ngResource',
     'ngSanitize',
@@ -9,7 +10,8 @@ angular
     'btford.socket-io',
     'angularFileUpload'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^s*(https?|ftp|mailto|file|tel|vlc-x-callback):/);
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

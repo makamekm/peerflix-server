@@ -5,6 +5,8 @@ angular.module('peerflixServerApp')
   .controller('MainCtrl', function ($scope, $resource, $log, $q, $upload, torrentSocket) {
     var Torrent = $resource('/torrents/:infoHash');
 
+    $scope.origin = window.location.origin;
+
     function load() {
       var torrents = Torrent.query(function () {
         $scope.torrents = torrents.reverse();
@@ -46,6 +48,11 @@ angular.module('peerflixServerApp')
       if (e.which === 13) {
         $scope.download();
       }
+    };
+
+    $scope.getUrl = function (link) {
+      var param = encodeURIComponent($scope.origin + link);
+      return "vlc-x-callback://x-callback-url/stream?url=" + param;
     };
 
     $scope.download = function () {
